@@ -26,6 +26,19 @@
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
+
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Status</label>
+                        <select name="status" class="form-control @error('status') is-invalid @enderror" id="status" name="status" value="{{ old('status') }}">
+                            <option value="1" selected>Active</option>
+                            <option value="0">De-active</option>
+                        </select>
+                            @if ($errors->has('status'))
+                                <span class="text-danger">{{ $errors->first('status') }}</span>
+                            @endif
+                        </div>
+                        
                     
                     <div class="mb-3" style="display: none;" >
                         <label for="name" class="form-label">Password</label>                        
@@ -55,3 +68,6 @@
 </div>
 
 @include('admin.include.admin_footer')
+<script type="text/javascript">
+    $('#status option[value={{ $data[0]->status }}]').attr('selected','selected');
+</script>

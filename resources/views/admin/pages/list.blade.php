@@ -1,3 +1,5 @@
+@inject('provider1', 'App\Http\Controllers\CommonController')
+
 @include("admin.include.admin_header")
 <div class="main_content_iner ">
 <div class="container-fluid plr_30 body_white_bg pt_30">
@@ -18,7 +20,9 @@
 </div>
 </div>
 <div class="add_button ms-2">
+@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('create',Auth::user()->rights)==true))
 <a href="{{URL('add_page')}}" class="btn_1">Add New Pages</a>
+@endif
 </div>
 </div>
 </div>
@@ -31,10 +35,6 @@
 
 <th scope="col">@sortablelink('status', 'status')</th>
 
-<th scope="col">@sortablelink('rights', 'rights')</th>
-
-<th scope="col">Status</th>
-
 <th scope="col">Action</th>
 </tr>
 </thead>
@@ -42,12 +42,19 @@
 @foreach($data as $value)
 <tr>
 <th scope="row"> <a href="#" class="question_content">{{$value->title}}</a></th>
-<td>{{$value->status}}</td>
-<td>Rights</td>
-<td><a href="#" class="status_btn">Active</a></td>
+<td>@if($value->status==1)
+	<a href="#" class="status_btn">Active</a>
+	@else
+	<a href="#" class="status_btn" style="background:orange">Blocked</a>
+	@endif</td>
 <td>
+
+	@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('edit',Auth::user()->rights)==true))
 	<a href="{{URL('edit_page')}}/{{$value->id}}" class="btn btn-primary status_btn" style="background: blue;">edit</a>
+	@endif
+    @if((Auth::user()->type=='admin') || ($provider1::check_list_permission('delete',Auth::user()->rights)==true))
 	<a href="{{URL('delete_page')}}/{{$value->id}}" id='{{$value->id}}' class="btn btn-info status_btn click-off" style="background:orange;">delete</a>
+	@endif
 </td>
 
 
@@ -62,16 +69,13 @@
 
 <th scope="col">@sortablelink('status', 'status')</th>
 
-<th scope="col">@sortablelink('rights', 'rights')</th>
-
-<th scope="col">Status</th>
-
 <th scope="col">Action</th>
 </tr>
 
 @empty($data)
 <tr><td>{{ $data->links() }}</td></tr>
 @endempty
+
 
 
 </tfoot>

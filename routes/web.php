@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DonorController;
+use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\PassportAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +47,33 @@ Route::controller(App\Http\Controllers\PagesController::class)->group(function()
     Route::post('/submit_page', 'submit_page')->name('submit_page');
     Route::any('/edit_page/{id}', 'edit_page')->name('edit_page');
     Route::get('/delete_page/{id}', 'delete_page')->name('delete_page');
+});
+
+
+
+Route::controller(App\Http\Controllers\DonorController::class)->group(function() {
+    Route::any('/list_donors', 'list_donors')->name('list_donors');
+    Route::any('/add_donors', 'add_donors')->name('add_donors');
+    Route::post('/api/fetch-states', 'fetchState')->name('api/fetch-states');
+    Route::any('api/fetch-cities', 'fetchCity')->name('api/fetch-cities');
+    Route::any('/edit_donors/{id}', 'edit_donors')->name('edit_donors');
+    Route::get('/delete_donors/{id}', 'delete_donors')->name('delete_donors');
+});
+
+Route::controller(App\Http\Controllers\Web_UserController::class)->group(function() {
+    Route::any('/list_web_users', 'list_web_users')->name('list_web_users');
+    Route::any('/add_web_users', 'add_web_users')->name('add_web_users');
+    Route::any('/edit_web_users/{id}', 'edit_web_users')->name('edit_web_users');
+    Route::get('/delete_web_users/{id}', 'delete_web_users')->name('delete_web_users');
+});
+
+
+Route::post('register1', [PassportAuthController::class, 'register']);
+Route::post('login1', [PassportAuthController::class, 'login']);
+  
+Route::middleware('auth:api')->group(function () {
+    Route::get('get-user', [PassportAuthController::class, 'userInfo']);
+ 
+// Route::resource('products', [ProductController::class]);
+ 
 });

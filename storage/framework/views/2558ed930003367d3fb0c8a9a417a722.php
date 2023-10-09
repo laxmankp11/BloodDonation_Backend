@@ -56,6 +56,7 @@
 
 </tbody>
 <tfoot>
+<<<<<<< HEAD
 <tr>
 
 <th scope="col"><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('title', 'title'));?></th>
@@ -74,6 +75,11 @@
 <?php endif; ?>
 
 
+=======
+<?php if(empty($data)): ?>
+<tr><td><?php echo e($data->links()); ?></td></tr>
+<?php endif; ?>  
+>>>>>>> b8548fb0900967db3fa18e3c9b8abe529241783b
 </tfoot>
 </table>
 </div>

@@ -50,13 +50,17 @@ var_dump($post["name"]);
     //var_dump($post);
      if(sizeof($post)<=0)
 {
-return view('admin.admin_userlist')->with("data",0);
+return view('admin.admin_userlist')->with("data",[]);
 }
 else
 {
-    $users = User::all();
+    $users = User::where("type","sub_admin")->get();
     return view('admin.admin_userlist')->with("data",$users->toQuery()->paginate(5));
 }
+    //$post = DB::table('users')->get()->paginate(15);
+     //$users = User::all();
+    //var_dump($post);
+    return view('admin.admin_userlist')->with("data",$users->toQuery()->paginate(5));
     }
 
     /**
@@ -73,16 +77,18 @@ else
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed'
         ]);
-
+        
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'type'=>'sub_admin',
+            'created_by_email'=>auth()->user()->email
         ]);
 
         $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
-        $request->session()->regenerate();
+        //Auth::attempt($credentials);
+        //$request->session()->regenerate();
         return redirect()->route('dashboard')
         ->withSuccess('You have successfully registered & logged in!');
     }
@@ -114,6 +120,7 @@ else
         $data = array(
             'name' => $request->name,
             'email' => $request->email,
+            'status'=>$request->status
             //'password' => Hash::make($request->password)
         );
         $up = User::where('id', $id)

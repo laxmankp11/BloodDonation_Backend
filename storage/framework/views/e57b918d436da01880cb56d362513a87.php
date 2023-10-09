@@ -73,10 +73,8 @@
 <li><a class href="<?php echo e(route('list_sub_admin')); ?>"><img src="<?php echo e(asset('img/menu-icon/2.svg')); ?>" alt>Manage Sub Admin</a></li>
 <li><a class href="<?php echo e(route('list_pages')); ?>"><img src="<?php echo e(asset('img/menu-icon/2.svg')); ?>" alt>Manage Pages</a></li>
 <?php $__currentLoopData = $provider1::pages_list(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-	<li><a class href="<?php echo e($provider1::check_routes($dt->url_route)); ?>"><img src="<?php echo e(asset('img/menu-icon/2.svg')); ?>" alt><?php echo e($dt->title); ?></a></li>
+	<li><a class href="<?php echo e(route('list_sub_admin')); ?>"><img src="<?php echo e(asset('img/menu-icon/2.svg')); ?>" alt><?php echo e($dt->title); ?></a></li>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-
 <!-- <li class>
 <a class="has-arrow" href="#" aria-expanded="false">
 <img src="<?php echo e(asset('img/menu-icon/3.svg')); ?>" alt>

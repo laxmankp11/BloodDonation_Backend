@@ -1,5 +1,1 @@
 CREATE TABLE `blood`.`pages` (`id` INT NOT NULL AUTO_INCREMENT , `title` INT NOT NULL , `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
-
-ALTER TABLE `users` ADD `status` ENUM('0','1') NOT NULL DEFAULT '1' AFTER `rights`;
-
-ALTER TABLE `pages` ADD `url_route` VARCHAR(200) NOT NULL AFTER `title`;

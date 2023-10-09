@@ -23,7 +23,11 @@
 </div>
 </div>
 <div class="QA_table ">
+<<<<<<< HEAD
 <table class="table table">
+=======
+<table class="table lms_table_active">
+>>>>>>> b8548fb0900967db3fa18e3c9b8abe529241783b
 <thead>
 <tr>
 
@@ -38,6 +42,7 @@
 <th scope="col">Action</th>
 </tr>
 </thead>
+<<<<<<< HEAD
 <?php if(sizeof($data) > 0): ?>
 <tbody>
 
@@ -56,6 +61,7 @@
 	<a href="#" class="status_btn" style="background:orange">Blocked</a>
 	<?php endif; ?>
 </td>
+
 <td>
 	<a href="<?php echo e(URL('edit_admin_user')); ?>/<?php echo e($value->id); ?>" class="btn btn-primary status_btn" style="background: blue;">edit</a>
 	<a href="<?php echo e(URL('delete_admin_user')); ?>/<?php echo e($value->id); ?>" id='<?php echo e($value->id); ?>' class="btn btn-info status_btn click-off" style="background:orange;">delete</a>
@@ -64,6 +70,7 @@
 
 </tr>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<<<<<<< HEAD
 <?php endif; ?>
 </tbody>
 
@@ -84,6 +91,13 @@
 <?php if(sizeof($data) > 0): ?>
 <tr><td><?php echo e($data->links()); ?></td></tr>
 <?php endif; ?>
+=======
+
+</tbody>
+<tfoot>
+<tr><td><?php echo e($data->links()); ?></td></tr>
+</tfoot>
+>>>>>>> b8548fb0900967db3fa18e3c9b8abe529241783b
 </table>
 </div>
 </div>

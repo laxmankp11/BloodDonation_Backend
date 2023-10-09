@@ -28,6 +28,7 @@
                             @endif
                     </div>
 
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Status</label>
                         <select name="status" class="form-control @error('status') is-invalid @enderror" id="status" name="status" value="{{ old('status') }}">
@@ -57,3 +58,7 @@
 </div>
 
 @include('admin.include.admin_footer')
+
+<script type="text/javascript">
+    $('#status option[value={{ $data[0]->status }}]').attr('selected','selected');
+</script>

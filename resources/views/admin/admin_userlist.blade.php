@@ -1,3 +1,5 @@
+@inject('provider1', 'App\Http\Controllers\CommonController')
+
 @include("admin.include.admin_header")
 <div class="main_content_iner ">
 <div class="container-fluid plr_30 body_white_bg pt_30">
@@ -18,12 +20,15 @@
 </div>
 </div>
 <div class="add_button ms-2">
+@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('create',Auth::user()->rights)==true))
 <a href="{{URL('add_admin_user')}}" class="btn_1">Add New Sub Admin</a>
+@endif
 </div>
 </div>
 </div>
 <div class="QA_table ">
-<table class="table table">
+
+<table class="table lms_table_active">
 <thead>
 <tr>
 
@@ -33,22 +38,32 @@
 
 <th scope="col">@sortablelink('rights', 'rights')</th>
 
+@if(Auth::user()->type=='admin')
+<th>Added By</th>
+@endif
+
 <th scope="col">Status</th>
 
 <th scope="col">Action</th>
 </tr>
 </thead>
 @if(sizeof($data) > 0)
-<tbody>
 
+
+<tbody>
 @foreach($data as $value)
-<tr>
-<td> <a href="#" class="question_content">{{$value->name}}</a></td>
-<td>{{$value->email}}</td>
-<td>
+
+@if((Auth::user()->email != $value->email))
+	<tr>
+	<th scope="row"> <a href="#" class="question_content">{{$value->name}}</a></th>
+	<td>{{$value->email}}</td>
+	<td>
 
 	<a href="{{URL('rights')}}/{{$value->id}}" class="btn btn-primary status_btn" style="background:#353571;border: 1px solid greenyellow;">Manage Rights</a>
 </td>
+@if(Auth::user()->type=='admin')
+<td>{{$provider1::added_by($value->created_by_email)}}</td>
+@endif
 <td>
 	@if($value->status==1)
 	<a href="#" class="status_btn">Active</a>
@@ -56,16 +71,21 @@
 	<a href="#" class="status_btn" style="background:orange">Blocked</a>
 	@endif
 </td>
-<td>
-	<a href="{{URL('edit_admin_user')}}/{{$value->id}}" class="btn btn-primary status_btn" style="background: blue;">edit</a>
-	<a href="{{URL('delete_admin_user')}}/{{$value->id}}" id='{{$value->id}}' class="btn btn-info status_btn click-off" style="background:orange;">delete</a>
-</td>
+	<td>
+		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('edit',Auth::user()->rights)==true))
+		<a href="{{URL('edit_admin_user')}}/{{$value->id}}" class="btn btn-primary status_btn" style="background: blue;">edit</a>
+		@endif
+		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('delete',Auth::user()->rights)==true))
+		<a href="{{URL('delete_admin_user')}}/{{$value->id}}" id='{{$value->id}}' class="btn btn-info status_btn click-off" style="background:orange;">delete</a>
+		@endif
+	</td>
 
 
-</tr>
+	</tr>
+	@endif
 @endforeach
-@endif
 </tbody>
+@endif
 
 <tfoot>
 <tr>
@@ -84,6 +104,7 @@
 @if(sizeof($data) > 0)
 <tr><td>{{ $data->links() }}</td></tr>
 @endif
+
 </table>
 </div>
 </div>
