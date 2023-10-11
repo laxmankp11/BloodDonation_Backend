@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\ProductController;
-use App\Http\Controllers\API\PassportAuthController;
+//use App\Http\Controllers\API\PassportAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ use App\Http\Controllers\API\PassportAuthController;
 // });
 
 Route::controller(App\Http\Controllers\Auth\LoginRegisterController::class)->group(function() {
-    Route::get('/register', 'register')->name('register');
+    //Route::get('/register', 'register')->name('register');
 
     Route::post('/store', 'store')->name('store');
     Route::get('/', 'login')->name('login');
@@ -68,11 +68,11 @@ Route::controller(App\Http\Controllers\Web_UserController::class)->group(functio
 });
 
 
-Route::post('register1', [PassportAuthController::class, 'register']);
-Route::post('login1', [PassportAuthController::class, 'login']);
+/*Route::post('register1', [PassportAuthController::class, 'register']);
+Route::post('login1', [PassportAuthController::class, 'login']);*/
   
 Route::middleware('auth:api')->group(function () {
-    Route::get('get-user', [PassportAuthController::class, 'userInfo']);
+    //Route::get('get-user', [PassportAuthController::class, 'userInfo']);
  
 // Route::resource('products', [ProductController::class]);
  

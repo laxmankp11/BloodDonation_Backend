@@ -13,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-       // 'register1'
+        'http://127.0.0.1:8000/post/'
     ];
 }

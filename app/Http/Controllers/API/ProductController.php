@@ -1,17 +1,22 @@
 <?php
- 
-namespace App\Http\Controllers\API;
- 
-use App\Http\Controllers\Controller;
- 
+namespace App\Http\Controllers;
+
 use App\Models\Product;
- 
 use Illuminate\Http\Request;
- 
-use Validator;
- 
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
+
 class ProductController extends Controller
 {
+    protected $user;
+ 
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,14 +24,21 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-     
-        return response()->json([
-            "success" => true,
-            "message" => "Product List",
-            "data" => $products
-        ]);
+        return $this->user
+            ->products()
+            ->get();
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -35,94 +47,119 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-    
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+        //Validate data
+        $data = $request->only('name', 'sku', 'price', 'quantity');
+        $validator = Validator::make($data, [
+            'name' => 'required|string',
+            'sku' => 'required',
+            'price' => 'required',
+            'quantity' => 'required'
         ]);
-    
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 200);
         }
-    
-        $product = Product::create($input);
- 
-        return response()->json([
-            "success" => true,
-            "message" => "Product created successfully.",
-            "data" => $product
+
+        //Request is valid, create new product
+        $product = $this->user->products()->create([
+            'name' => $request->name,
+            'sku' => $request->sku,
+            'price' => $request->price,
+            'quantity' => $request->quantity
         ]);
- 
-    } 
-    
+
+        //Product created, return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'Product created successfully',
+            'data' => $product
+        ], Response::HTTP_OK);
+    }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $product = Product::find($id);
-   
-        if (is_null($product)) {
-            return $this->sendError('Product not found.');
+        $product = $this->user->products()->find($id);
+    
+        if (!$product) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, product not found.'
+            ], 400);
         }
-         
-        return response()->json([
-            "success" => true,
-            "message" => "Product retrieved successfully.",
-            "data" => $product
-        ]);
- 
+    
+        return $product;
     }
-     
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Product $product)
+    {
+        //
+    }
+
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product)
     {
-        $input = $request->all();
-    
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+        //Validate data
+        $data = $request->only('name', 'sku', 'price', 'quantity');
+        $validator = Validator::make($data, [
+            'name' => 'required|string',
+            'sku' => 'required',
+            'price' => 'required',
+            'quantity' => 'required'
         ]);
-    
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 200);
         }
-    
-        $product->name = $input['name'];
-        $product->detail = $input['detail'];
-        $product->save();
-    
-        return response()->json([
-            "success" => true,
-            "message" => "Product updated successfully.",
-            "data" => $product
+
+        //Request is valid, update product
+        $product = $product->update([
+            'name' => $request->name,
+            'sku' => $request->sku,
+            'price' => $request->price,
+            'quantity' => $request->quantity
         ]);
+
+        //Product updated, return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'Product updated successfully',
+            'data' => $product
+        ], Response::HTTP_OK);
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
     {
         $product->delete();
-    
+        
         return response()->json([
-            "success" => true,
-            "message" => "Product deleted successfully.",
-            "data" => $product
-        ]);
+            'success' => true,
+            'message' => 'Product deleted successfully'
+        ], Response::HTTP_OK);
     }
 }
