@@ -19,6 +19,15 @@
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
                     </div>
+
+                     <div class="mb-3">
+                        <label for="username" class="form-label">username</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') }}">
+                            @if ($errors->has('username'))
+                                <span class="text-danger">{{ $errors->first('username') }}</span>
+                            @endif
+                    </div>
+                    
                     <div class="mb-3">
                         <label for="name" class="form-label">Email Address</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
@@ -35,12 +44,6 @@
                             @endif
                     </div>
 
-
-
-
-
-
-
                     <div class="mb-3">
                         <label for="phone_no" class="form-label">Phone No</label>
                           <input type="text" class="exampleFormControlInput1 form-control @error('phone_no') is-invalid @enderror" id="phone_no" name="phone_no" value="{{ old('phone_no') }}">
@@ -48,6 +51,24 @@
                                 <span class="text-danger">{{ $errors->first('phone_no') }}</span>
                             @endif
                     </div>
+
+                     <div class="mb-3">
+                        <label for="landline_no" class="form-label">Landline No</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('landline_no') is-invalid @enderror" id="landline_no" name="landline_no" value="{{ old('landline_no') }}">
+                            @if ($errors->has('landline_no'))
+                                <span class="text-danger">{{ $errors->first('landline_no') }}</span>
+                            @endif
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="profile_pic" class="form-label">Profile Pic</label>
+                          <input type="file" class="exampleFormControlInput1 form-control @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic" value="{{ old('profile_pic') }}">
+                            @if ($errors->has('profile_pic'))
+                                <span class="text-danger">{{ $errors->first('profile_pic') }}</span>
+                            @endif
+                    </div>                   
+
 
                     <div class="mb-3">
                         <label for="blood_type" class="form-label">Blood Type</label>
@@ -125,12 +146,39 @@
                             @endif
                     </div>
                     
+
+                    <div class="mb-3">
+                        <label for="is_available_to_donate" class="form-label">Is Available To Donate</label>
+                           <select  id="is_available_to_donate" class="exampleFormControlInput1 form-control @error('is_available_to_donate') is-invalid @enderror" name='is_available_to_donate' value="{{old('is_available_to_donate')}}">
+                            <option value="">Select Is Available To Donate</option>
+                            <option value="1" selected>Visible</option>
+                            <option value="0">Hidden</option>
+                        </select>
+                            @if ($errors->has('is_available_to_donate'))
+                                <span class="text-danger">{{ $errors->first('is_available_to_donate') }}</span>
+                            @endif
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="is_visible_contact_detail" class="form-label">Is Visible Contact Detail</label>
+                           <select  id="is_visible_contact_detail" class="exampleFormControlInput1 form-control @error('is_visible_contact_detail') is-invalid @enderror" name='is_visible_contact_detail' value="{{old('is_visible_contact_detail')}}">
+                            <option value="">Select Is Visible Contact Detail</option>
+                            <option value="1" selected>Visible</option>
+                            <option value="0">Hidden</option>
+                        </select>
+                            @if ($errors->has('is_visible_contact_detail'))
+                                <span class="text-danger">{{ $errors->first('is_visible_contact_detail') }}</span>
+                            @endif
+                    </div>
+
+
                      <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                            <select  id="status" class="exampleFormControlInput1 form-control @error('status') is-invalid @enderror" name='status' value="{{old('status')}}">
                             <option value="">Select Status</option>
                             <option value="1" selected>Active</option>
-                            <option value="0">De-active</option>
+                            <option value="0">In-active</option>
                         </select>
                             @if ($errors->has('status'))
                                 <span class="text-danger">{{ $errors->first('status') }}</span>

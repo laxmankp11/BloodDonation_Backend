@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Hash;
 
 class DonorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');   
+    }
+
     public function add_donors(Request $request)
     {
          if ($request->isMethod('get'))
@@ -32,9 +37,15 @@ class DonorController extends Controller
             'state'=>'required|int',
             'country'=>'required|int',
             'profile_status'=>'required',
+            'landline_no'=>'digits:10|unique:donors',
+            'username'=>'required',
+            'is_available_to_donate'=>"required",
+            "profile_pic"=>"",
+            "is_visible_contact_detail"=>"required",
             'status'=>'required'
         ]);
         
+        $profile_pic = '';
         Donor::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -47,6 +58,11 @@ class DonorController extends Controller
             'state'=>$request->state,
             'country'=>$request->country,
             'profile_status'=>$request->profile_status,
+            'landline_no'=>$request->landline_no,
+            'username'=>$request->username,
+            'is_available_to_donate'=>$request->is_available_to_donate,
+            "profile_pic"=>$profile_pic,
+            "is_visible_contact_detail"=>$request->is_visible_contact_detail,
             'status'=>$request->status
         ]);
 
@@ -99,6 +115,11 @@ class DonorController extends Controller
             //'state'=>'required|int',
             //'country'=>'required|int',
             'profile_status'=>'required',
+            'landline_no'=>'digits:10|unique:donors',
+            'username'=>'required',
+            'is_available_to_donate'=>"required",
+            "profile_pic"=>"",
+            "is_visible_contact_detail"=>"required",
             'status'=>'required'
         ]);
         
@@ -114,6 +135,11 @@ class DonorController extends Controller
             'state'=>$request->state,
             'country'=>$request->country,
             'profile_status'=>$request->profile_status,
+            'landline_no'=>$request->landline_no,
+            'username'=>$request->username,
+            'is_available_to_donate'=>$request->is_available_to_donate,
+            "profile_pic"=>$profile_pic,
+            "is_visible_contact_detail"=>$request->is_visible_contact_detail,
             'status'=>$request->status
         );
 

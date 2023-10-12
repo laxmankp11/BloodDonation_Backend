@@ -25,7 +25,13 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'type',
-        'created_by_email'
+        'created_by_email',
+        'profile_status',
+        'landline_no',
+        'username',
+        'is_available_to_donate',
+        'profile_pic',
+        'is_visible_contact_detail'
     ];
 public $sortable = ['name','email'];
     /**

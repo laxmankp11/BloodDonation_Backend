@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Hash;
 
 class Web_UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');   
+    }
+
     public function add_web_users(Request $request)
     {
          if ($request->isMethod('get'))
