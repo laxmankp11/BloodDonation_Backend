@@ -11,7 +11,7 @@
 <div class="col-12">
             <div class="card-header">Edit Donor</div>
             <div class="card-body">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -20,6 +20,15 @@
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
                     </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">username</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ $donor[0]->username }}">
+                            @if ($errors->has('username'))
+                                <span class="text-danger">{{ $errors->first('username') }}</span>
+                            @endif
+                    </div>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Email Address</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $donor[0]->email }}">
@@ -50,9 +59,45 @@
                             @endif
                     </div>
 
+                     <div class="mb-3">
+                        <label for="landline_no" class="form-label">Landline No</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('landline_no') is-invalid @enderror" id="landline_no" name="landline_no" value="{{ $donor[0]->landline_no }}">
+                            @if ($errors->has('landline_no'))
+                                <span class="text-danger">{{ $errors->first('landline_no') }}</span>
+                            @endif
+                    </div>
+
+
                     <div class="mb-3">
+                        <label for="profile_pic" class="form-label">Profile Pic</label>
+                          <input type="file" class="exampleFormControlInput1 form-control @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic" value="{{ old('profile_pic') }}">
+                            @if ($errors->has('profile_pic'))
+                                <span class="text-danger">{{ $errors->first('profile_pic') }}</span>
+                            @endif
+                    </div> 
+                    <input type="hidden" name="profile_pic_text" value="{{$donor[0]->profile_pic}}">
+
+                   <!--  <div class="mb-3">
                         <label for="blood_type" class="form-label">Blood Type</label>
                           <input type="text" class="exampleFormControlInput1 form-control @error('blood_type') is-invalid @enderror" id="blood_type" name="blood_type" value="{{ $donor[0]->blood_type }}">
+                            @if ($errors->has('blood_type'))
+                                <span class="text-danger">{{ $errors->first('blood_type') }}</span>
+                            @endif
+                    </div> -->
+
+                    <div class="mb-3">
+                        <label for="blood_type" class="form-label">Blood Group</label>
+                           <select  id="blood_type" class="exampleFormControlInput1 form-control @error('blood_type') is-invalid @enderror" name='blood_type' value="{{old('blood_type')}}">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="A-">A-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
                             @if ($errors->has('blood_type'))
                                 <span class="text-danger">{{ $errors->first('blood_type') }}</span>
                             @endif
@@ -125,6 +170,33 @@
                                 <span class="text-danger">{{ $errors->first('profile_status') }}</span>
                             @endif
                     </div>
+
+
+                    <div class="mb-3">
+                        <label for="is_available_to_donate" class="form-label">Is Available To Donate</label>
+                           <select  id="is_available_to_donate" class="exampleFormControlInput1 form-control @error('is_available_to_donate') is-invalid @enderror" name='is_available_to_donate' value="{{old('is_available_to_donate')}}">
+                            <option value="">Select Is Available To Donate</option>
+                            <option value="1" selected>Visible</option>
+                            <option value="0">Hidden</option>
+                        </select>
+                            @if ($errors->has('is_available_to_donate'))
+                                <span class="text-danger">{{ $errors->first('is_available_to_donate') }}</span>
+                            @endif
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="is_visible_contact_detail" class="form-label">Is Visible Contact Detail</label>
+                           <select  id="is_visible_contact_detail" class="exampleFormControlInput1 form-control @error('is_visible_contact_detail') is-invalid @enderror" name='is_visible_contact_detail' value="{{old('is_visible_contact_detail')}}">
+                            <option value="">Select Is Visible Contact Detail</option>
+                            <option value="1" selected>Visible</option>
+                            <option value="0">Hidden</option>
+                        </select>
+                            @if ($errors->has('is_visible_contact_detail'))
+                                <span class="text-danger">{{ $errors->first('is_visible_contact_detail') }}</span>
+                            @endif
+                    </div>
+
                     
                      <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
@@ -215,6 +287,9 @@
         $('#country-dd option[value={{ $donor[0]->country }}]').attr('selected','selected');
         $('#state-dd option[value={{ $donor[0]->state }}]').attr('selected','selected');
         $('#city-dd option[value={{ $donor[0]->city }}]').attr('selected','selected');
+        $('#is_visible_contact_detail option[value={{ $donor[0]->is_visible_contact_detail }}]').attr('selected','selected');
+        $('#is_available_to_donate option[value={{ $donor[0]->is_available_to_donate }}]').attr('selected','selected');
+        $('#blood_type option[value="{{ $donor[0]->blood_type }}"]').attr('selected','selected');
     </script>
 
 @include('admin.include.admin_footer')

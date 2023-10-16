@@ -35,7 +35,7 @@ var_dump($post["name"]);
         return view('admin.pages.list')->with("data",$pages);
     }
     else{
-        return view('admin.pages.list')->with("data",$pages->toQuery()->paginate(5));
+        return view('admin.pages.list')->with("data",$pages->toQuery()->paginate(25));
     }
     }
 

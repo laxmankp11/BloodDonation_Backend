@@ -8,7 +8,7 @@
 <div class="quick_activity">
 <div class="row">
 <div class="col-12">
-            <div class="card-header">Add Donor</div>
+            <div class="card-header">Add User</div>
             <div class="card-body">
                 <form method="post">
                     @csrf
@@ -29,7 +29,7 @@
                         </div>
                     
                     <div class="mb-3">
-                        <label for="patient_name" class="form-label">patient_name</label>
+                        <label for="patient_name" class="form-label">Patient Name</label>
                           <input type="text" class="exampleFormControlInput1 form-control @error('patient_name') is-invalid @enderror" id="patient_name" name="patient_name" value="{{ old('patient_name') }}">
                             @if ($errors->has('patient_name'))
                                 <span class="text-danger">{{ $errors->first('patient_name') }}</span>
@@ -44,12 +44,6 @@
                             @endif
                     </div>
 
-
-
-
-
-
-
                     <div class="mb-3">
                         <label for="phone_no" class="form-label">Phone No</label>
                           <input type="text" class="exampleFormControlInput1 form-control @error('phone_no') is-invalid @enderror" id="phone_no" name="phone_no" value="{{ old('phone_no') }}">
@@ -59,8 +53,18 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="blood_type" class="form-label">Blood Type</label>
-                          <input type="text" class="exampleFormControlInput1 form-control @error('blood_type') is-invalid @enderror" id="blood_type" name="blood_type" value="{{ old('blood_type') }}">
+                        <label for="blood_type" class="form-label">Blood Group</label>
+                           <select  id="blood_type" class="exampleFormControlInput1 form-control @error('blood_type') is-invalid @enderror" name='blood_type' value="{{old('blood_type')}}">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="A-">A-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
                             @if ($errors->has('blood_type'))
                                 <span class="text-danger">{{ $errors->first('blood_type') }}</span>
                             @endif
@@ -145,14 +149,6 @@
                                 <span class="text-danger">{{ $errors->first('status') }}</span>
                             @endif
                     </div>
-
-
-
-
-
-
-
-
 
                    
                     <div class="mb-3">

@@ -122,4 +122,8 @@
 	.sidebar #sidebar_menu li ul li a.active{
 		color:blue;
 	}
+
+	table.dataTable.dtr-inline.collapsed>tbody>tr[role=row]>td:first-child::before, table.dataTable.dtr-inline.collapsed>tbody>tr[role=row]>th:first-child::before{
+		background-color: #185deb !important;
+	}
 </style>

@@ -60,8 +60,18 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="blood_type" class="form-label">Blood Type</label>
-                          <input type="text" class="exampleFormControlInput1 form-control @error('blood_type') is-invalid @enderror" id="blood_type" name="blood_type" value="{{ $web_users[0]->blood_type }}">
+                        <label for="blood_type" class="form-label">Blood Group</label>
+                           <select  id="blood_type" class="exampleFormControlInput1 form-control @error('blood_type') is-invalid @enderror" name='blood_type' value="{{old('blood_type')}}">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="A-">A-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
                             @if ($errors->has('blood_type'))
                                 <span class="text-danger">{{ $errors->first('blood_type') }}</span>
                             @endif
@@ -224,6 +234,7 @@
         $('#country-dd option[value={{ $web_users[0]->country }}]').attr('selected','selected');
         $('#state-dd option[value={{ $web_users[0]->state }}]').attr('selected','selected');
         $('#city-dd option[value={{ $web_users[0]->city }}]').attr('selected','selected');
+        $('#blood_type option[value="{{ $web_users[0]->blood_type }}"]').attr('selected','selected');
     </script>
 
 @include('admin.include.admin_footer')

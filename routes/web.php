@@ -67,7 +67,12 @@ Route::controller(App\Http\Controllers\Web_UserController::class)->group(functio
     Route::get('/delete_web_users/{id}', 'delete_web_users')->name('delete_web_users');
 });
 
-
+Route::controller(App\Http\Controllers\Hospital_Controller::class)->group(function() {
+    Route::any('/list_hospitals', 'list_hospitals')->name('list_hospitals');
+    Route::any('/add_hospitals', 'add_hospitals')->name('add_hospitals');
+    Route::any('/edit_hospitals/{id}', 'edit_hospitals')->name('edit_hospitals');
+    Route::get('/delete_hospitals/{id}', 'delete_hospitals')->name('delete_hospitals');
+});
 /*Route::post('register1', [PassportAuthController::class, 'register']);
 Route::post('login1', [PassportAuthController::class, 'login']);*/
   

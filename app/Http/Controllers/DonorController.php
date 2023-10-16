@@ -37,15 +37,21 @@ class DonorController extends Controller
             'state'=>'required|int',
             'country'=>'required|int',
             'profile_status'=>'required',
-            'landline_no'=>'digits:10|unique:donors',
+            'landline_no'=>'digits:11|unique:donors',
             'username'=>'required',
             'is_available_to_donate'=>"required",
-            "profile_pic"=>"",
+            //"profile_pic"=>"mimes:jpeg,jpg,png,gif|max:2048",
             "is_visible_contact_detail"=>"required",
             'status'=>'required'
         ]);
         
-        $profile_pic = '';
+        //$profile_pic = '';
+
+            if($_FILES['profile_pic']){
+     $profile_pic = time() . '.' . $request->profile_pic->extension();
+     $request->profile_pic->move(public_path('uploads/donor_profile'), $profile_pic);
+ }
+
         Donor::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -81,6 +87,7 @@ class DonorController extends Controller
          $data1 = DB::table('donors')->where('id', $id)->get();
          $email = $data1[0]->email;
          $phone_no = $data1[0]->phone_no;
+         $landline_no = $data1[0]->landline_no;
         if($email==$request->email)
            {
                 $email = 'required|string|max:250';
@@ -91,10 +98,18 @@ class DonorController extends Controller
 
            if($phone_no==$request->phone_no)
            {
-                $phone_no = 'required|string|max:250';
+                $phone_no = 'digits:10';
            }
            else{
-                $phone_no = 'required|string|max:250|unique:donors';
+                $phone_no = 'required|digits:10|unique:donors';
+           }
+
+           if($landline_no==$request->landline_no)
+           {
+                $landline_no = 'digits:10';
+           }
+           else{
+                $landline_no = 'required|digits:10|unique:donors';
            }
 
          if ($request->isMethod('get'))
@@ -115,14 +130,22 @@ class DonorController extends Controller
             //'state'=>'required|int',
             //'country'=>'required|int',
             'profile_status'=>'required',
-            'landline_no'=>'digits:10|unique:donors',
+            'landline_no'=>$landline_no,
             'username'=>'required',
             'is_available_to_donate'=>"required",
-            "profile_pic"=>"",
+            //"profile_pic"=>"mimes:jpeg,jpg,png,gif|max:2048",
             "is_visible_contact_detail"=>"required",
             'status'=>'required'
         ]);
         
+        if($request->hasFile('profile_pic'))
+        {
+            $profile_pic = time() . '.' . $request->profile_pic->extension();
+            $request->profile_pic->move(public_path('uploads/donor_profile'), $profile_pic);
+        }
+        else{
+            $profile_pic = $request->profile_pic_text;
+        }
         $data = array(
             'name' => $request->name,
             'email' => $request->email,

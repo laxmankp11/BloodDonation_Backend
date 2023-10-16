@@ -113,8 +113,6 @@
 		<a href="{{URL('delete_web_users')}}/{{$value->id}}" id='{{$value->id}}' class="btn btn-info status_btn click-off" style="background:orange;">delete</a>
 		@endif
 	</td>
-
-
 	</tr>
 @endforeach
 </tbody>
@@ -124,6 +122,8 @@
 <tr>
 
 <th scope="col">@sortablelink('name', 'name')</th>
+
+<th scope="col">@sortablelink('patient_name', 'patient_name')</th>
 
 <th scope="col">@sortablelink('email', 'email')</th>
 
