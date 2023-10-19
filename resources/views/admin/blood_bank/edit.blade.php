@@ -1,0 +1,233 @@
+@inject('provider1', 'App\Http\Controllers\CommonController')
+@include('admin.include.admin_header')
+
+<div class="main_content_iner ">
+<div class="container-fluid plr_30 body_white_bg pt_30">
+<div class="row justify-content-center">
+<div class="col-lg-12">
+<div class="single_element">
+<div class="quick_activity">
+<div class="row">
+<div class="col-12">
+            <div class="card-header">Edit Blood Bank</div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $blood_bank[0]->name }}">
+                            @if ($errors->has('name'))
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                            @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">username</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ $blood_bank[0]->username }}">
+                            @if ($errors->has('username'))
+                                <span class="text-danger">{{ $errors->first('username') }}</span>
+                            @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Email Address</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $blood_bank[0]->email }}">
+                            @if ($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                            @endif
+                        </div>
+                    
+                    <!-- <div class="mb-3">
+                        <label for="name" class="form-label">Password</label>                        
+                          <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
+                            @if ($errors->has('password'))
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                            @endif
+                    </div> -->
+
+
+
+
+
+
+
+                    <div class="mb-3">
+                        <label for="phone_no" class="form-label">Phone No</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('phone_no') is-invalid @enderror" id="phone_no" name="phone_no" value="{{ $blood_bank[0]->phone_no }}">
+                            @if ($errors->has('phone_no'))
+                                <span class="text-danger">{{ $errors->first('phone_no') }}</span>
+                            @endif
+                    </div>
+
+                     <div class="mb-3">
+                        <label for="landline_no" class="form-label">Landline No</label>
+                          <input type="text" class="exampleFormControlInput1 form-control @error('landline_no') is-invalid @enderror" id="landline_no" name="landline_no" value="{{ $blood_bank[0]->landline_no }}">
+                            @if ($errors->has('landline_no'))
+                                <span class="text-danger">{{ $errors->first('landline_no') }}</span>
+                            @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                          <textarea rows="4" class="exampleFormControlInput1 form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ $blood_bank[0]->address }}">{{ $blood_bank[0]->address }}</textarea>
+                            @if ($errors->has('address'))
+                                <span class="text-danger">{{ $errors->first('address') }}</span>
+                            @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Country</label>
+                          
+
+                          <select  id="country-dd" class="exampleFormControlInput1 form-control @error('country') is-invalid @enderror" name='country' value="{{ $blood_bank[0]->country }}">
+                            <option value="">Select Country</option>
+                            @foreach ($countries as $data)
+                            <option value="{{$data->id}}">
+                                {{$data->name}}
+                            </option>
+                            @endforeach
+                        </select>
+
+                            @if ($errors->has('country'))
+                                <span class="text-danger">{{ $errors->first('country') }}</span>
+                            @endif
+                    </div>
+
+
+                 <div class="mb-3">
+                        <label for="name" class="form-label">state</label>
+                          
+
+                          <select  id="state-dd" class="exampleFormControlInput1 form-control @error('state') is-invalid @enderror" name='state' value="{{ $blood_bank[0]->state }}">
+                            <option value="{{$provider1::get_state_id($blood_bank[0]->state)}}">{{$provider1::get_state($blood_bank[0]->state)}}</option>
+                        </select>
+
+                            @if ($errors->has('state'))
+                                <span class="text-danger">{{ $errors->first('state') }}</span>
+                            @endif
+                    </div>
+
+
+                <div class="mb-3">
+                        <label for="name" class="form-label">city</label>
+                          
+
+                          <select  id="city-dd" class="exampleFormControlInput1 form-control @error('city') is-invalid @enderror" name='city' value="{{ $blood_bank[0]->city }}">
+                            <option value="{{$provider1::get_city_id($blood_bank[0]->city)}}">{{$provider1::get_city($blood_bank[0]->city)}}</option>
+                        </select>
+
+                            @if ($errors->has('city'))
+                                <span class="text-danger">{{ $errors->first('city') }}</span>
+                            @endif
+                    </div>
+ 
+                    
+
+                    <div class="mb-3">
+                        <label for="profile_status" class="form-label">Profile Status</label>
+                           <select  id="profile_status" class="exampleFormControlInput1 form-control @error('profile_status') is-invalid @enderror" name='profile_status' value="{{old('profile_status')}}">
+                            <option value="">Select Profile Status</option>
+                            <option value="1" selected>Visible</option>
+                            <option value="0">Hidden</option>
+                        </select>
+                            @if ($errors->has('profile_status'))
+                                <span class="text-danger">{{ $errors->first('profile_status') }}</span>
+                            @endif
+                    </div>
+
+
+
+                    
+                     <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                           <select  id="status" class="exampleFormControlInput1 form-control @error('status') is-invalid @enderror" name='status' value="{{old('status')}}">
+                            <option value="">Select Status</option>
+                            <option value="1" selected>Active</option>
+                            <option value="0">De-active</option>
+                        </select>
+                            @if ($errors->has('status'))
+                                <span class="text-danger">{{ $errors->first('status') }}</span>
+                            @endif
+                    </div>
+
+
+
+
+
+
+
+
+
+                   
+                    <div class="mb-3">
+                        <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Submit">
+                    </div>
+                    
+                </form>
+          
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#country-dd').on('change', function () {
+                var idCountry = this.value;
+                $("#state-dd").html('');
+                $.ajax({
+                    url: "{{url('api/fetch-states')}}",
+                    type: "POST",
+                    data: {
+                        country_id: idCountry,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#state-dd').html('<option value="">Select State</option>');
+                        $.each(result.states, function (key, value) {
+                            $("#state-dd").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+                        $('#city-dd').html('<option value="">Select City</option>');
+                    }
+                });
+            });
+            $('#state-dd').on('change', function () {
+                var idState = this.value;
+                $("#city-dd").html('');
+                $.ajax({
+                    url: "{{url('api/fetch-cities')}}",
+                    type: "POST",
+                    data: {
+                        state_id: idState,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        $('#city-dd').html('<option value="">Select City</option>');
+                        $.each(res.cities, function (key, value) {
+                            $("#city-dd").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+
+        $('#profile_status option[value={{ $blood_bank[0]->profile_status }}]').attr('selected','selected');
+        $('#status option[value={{ $blood_bank[0]->status }}]').attr('selected','selected');
+        $('#country-dd option[value={{ $blood_bank[0]->country }}]').attr('selected','selected');
+        $('#state-dd option[value={{ $blood_bank[0]->state }}]').attr('selected','selected');
+        $('#city-dd option[value={{ $blood_bank[0]->city }}]').attr('selected','selected');
+        
+    </script>
+
+@include('admin.include.admin_footer')

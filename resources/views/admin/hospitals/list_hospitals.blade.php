@@ -31,16 +31,13 @@
 <table class="table lms_table_active" style="overflow: scroll;width: 300%;">
 <thead>
 <tr>
+<th scope="col">Action</th>
 
 <th scope="col">@sortablelink('name', 'name')</th>
-
-<th scope="col">@sortablelink('patient_name', 'patient_name')</th>
 
 <th scope="col">@sortablelink('email', 'email')</th>
 
 <th scope="col">@sortablelink('phone_no', 'phone_no')</th>
-
-<th scope="col">@sortablelink('blood_type', 'blood_type')</th>
 
 <th scope="col">@sortablelink('	address', '	address')</th>
 
@@ -50,15 +47,11 @@
 
 <th scope="col">@sortablelink('country', 'country')</th>
 
-<th scope="col">@sortablelink('profile_status', 'profile_status')</th>
-
 <th scope="col">@sortablelink('status', 'status')</th>
 
 @if(Auth::user()->type=='admin')
 <th>Added By</th>
 @endif
-
-<th scope="col">Action</th>
 </tr>
 </thead>
 
@@ -69,15 +62,21 @@
 @foreach($data as $value)
 
 	<tr>
+	<td>
+		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('edit',Auth::user()->rights)==true))
+		<a href="{{URL('edit_hospitals')}}/{{$value->id}}" class="status_btn" style="background: blue;min-width: 35px;"><span class="fa fa-edit"></span></a>
+		@endif
+		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('delete',Auth::user()->rights)==true))
+		<a href="{{URL('delete_hospitals')}}/{{$value->id}}" id='{{$value->id}}' class="status_btn click-off" style="background:orange;min-width: 35px;"><span class="fa fa-trash"></span></a>
+		@endif
+	</td>
+
 	<th scope="row"> <a href="#">{{$value->name}}</a></th>
 
-	<th scope="row"> <a href="#">{{$value->patient_name}}</a></th>
 	
 	<td>{{$value->email}}</td>
 
 	<td>{{$value->phone_no}}</td>
-
-	<td>{{$value->blood_type}}</td>
 
 	<td>{{$value->address}}</td>
 
@@ -86,12 +85,6 @@
 	<td>{{$provider1::get_state($value->state)}}</td>
 
 	<td>{{$provider1::get_country($value->country)}}</td>
-
-	<td>@if($value->profile_status==1)
-	<a href="#" class="status_btn">Active</a>
-	@else
-	<a href="#" class="status_btn" style="background:orange">Hidden</a>
-	@endif</td>
 
 	<td>
 	@if($value->status==1)
@@ -104,32 +97,20 @@
 @if(Auth::user()->type=='admin')
 <td>{{$provider1::added_by($value->created_by_email)}}</td>
 @endif
-
-	<td>
-		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('edit',Auth::user()->rights)==true))
-		<a href="{{URL('edit_hospitals')}}/{{$value->id}}" class="btn btn-primary status_btn" style="background: blue;">edit</a>
-		@endif
-		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('delete',Auth::user()->rights)==true))
-		<a href="{{URL('delete_hospitals')}}/{{$value->id}}" id='{{$value->id}}' class="btn btn-info status_btn click-off" style="background:orange;">delete</a>
-		@endif
-	</td>
-	</tr>
+</tr>
 @endforeach
 </tbody>
 @endif
 
 <tfoot>
 <tr>
+<th scope="col">Action</th>
 
 <th scope="col">@sortablelink('name', 'name')</th>
-
-<th scope="col">@sortablelink('patient_name', 'patient_name')</th>
 
 <th scope="col">@sortablelink('email', 'email')</th>
 
 <th scope="col">@sortablelink('phone_no', 'phone_no')</th>
-
-<th scope="col">@sortablelink('blood_type', 'blood_type')</th>
 
 <th scope="col">@sortablelink('	address', '	address')</th>
 
@@ -139,15 +120,12 @@
 
 <th scope="col">@sortablelink('country', 'country')</th>
 
-<th scope="col">@sortablelink('profile_status', 'profile_status')</th>
-
 <th scope="col">@sortablelink('status', 'status')</th>
 
 @if(Auth::user()->type=='admin')
 <th>Added By</th>
 @endif
 
-<th scope="col">Action</th>
 </tr>
 </tfoot>
 @if(sizeof($data) > 0)

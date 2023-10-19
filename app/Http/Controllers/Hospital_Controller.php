@@ -237,7 +237,7 @@ class Hospital_Controller extends Controller
     else
     {
         $hospitals = Hospitals::all();
-        return view('admin.hospitals.list_hospitals')->with("data",$hospitals->toQuery()->paginate(5));
+        return view('admin.hospitals.list_hospitals')->with("data",$hospitals->toQuery()->paginate(25));
     }
   }
 }

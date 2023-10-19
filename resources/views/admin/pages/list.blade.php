@@ -72,9 +72,9 @@
 <th scope="col">Action</th>
 </tr>
 
-@empty($data)
+@if(sizeof($data) > 0)
 <tr><td>{{ $data->links() }}</td></tr>
-@endempty
+@endif
 
 
 

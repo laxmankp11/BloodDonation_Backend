@@ -32,6 +32,8 @@
 <thead>
 <tr>
 
+<th scope="col">Action</th>
+
 <th scope="col">@sortablelink('name', 'name')</th>
 
 <th scope="col">@sortablelink('patient_name', 'patient_name')</th>
@@ -58,7 +60,7 @@
 <th>Added By</th>
 @endif
 
-<th scope="col">Action</th>
+
 </tr>
 </thead>
 
@@ -69,6 +71,16 @@
 @foreach($data as $value)
 
 	<tr>
+
+	<td>
+		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('edit',Auth::user()->rights)==true))
+		<a href="{{URL('edit_web_users')}}/{{$value->id}}" class="status_btn" style="background: blue;min-width: 35px;"><span class="fa fa-edit"></span></a>
+		@endif
+		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('delete',Auth::user()->rights)==true))
+		<a href="{{URL('delete_web_users')}}/{{$value->id}}" id='{{$value->id}}' class="status_btn click-off" style="background:orange;min-width: 35px;"><span class="fa fa-trash"></span></a>
+		@endif
+	</td>
+
 	<th scope="row"> <a href="#">{{$value->name}}</a></th>
 
 	<th scope="row"> <a href="#">{{$value->patient_name}}</a></th>
@@ -105,14 +117,7 @@
 <td>{{$provider1::added_by($value->created_by_email)}}</td>
 @endif
 
-	<td>
-		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('edit',Auth::user()->rights)==true))
-		<a href="{{URL('edit_web_users')}}/{{$value->id}}" class="btn btn-primary status_btn" style="background: blue;">edit</a>
-		@endif
-		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('delete',Auth::user()->rights)==true))
-		<a href="{{URL('delete_web_users')}}/{{$value->id}}" id='{{$value->id}}' class="btn btn-info status_btn click-off" style="background:orange;">delete</a>
-		@endif
-	</td>
+	
 	</tr>
 @endforeach
 </tbody>
@@ -120,6 +125,8 @@
 
 <tfoot>
 <tr>
+
+<th scope="col">Action</th>
 
 <th scope="col">@sortablelink('name', 'name')</th>
 
@@ -147,7 +154,6 @@
 <th>Added By</th>
 @endif
 
-<th scope="col">Action</th>
 </tr>
 </tfoot>
 @if(sizeof($data) > 0)

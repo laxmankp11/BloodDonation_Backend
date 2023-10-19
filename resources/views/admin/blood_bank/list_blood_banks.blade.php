@@ -7,7 +7,7 @@
 <div class="col-12">
 <div class="QA_section">
 <div class="white_box_tittle list_header">
-<h4>Donors List</h4>
+<h4>Blood Bank List</h4>
 <div class="box_right d-flex lms_block">
 <div class="serach_field_2">
 <div class="search_inner">
@@ -21,7 +21,7 @@
 </div>
 <div class="add_button ms-2">
 @if((Auth::user()->type=='admin') || ($provider1::check_list_permission('create',Auth::user()->rights)==true))
-<a href="{{URL('add_donors')}}" class="btn_1">Add New Donor</a>
+<a href="{{URL('add_blood_banks')}}" class="btn_1">Add New Blood Bank</a>
 @endif
 </div>
 </div>
@@ -42,8 +42,6 @@
 
 <th scope="col">Landline No</th>
 
-<th scope="col">@sortablelink('blood_type', 'blood_type')</th>
-
 <th scope="col">@sortablelink('	address', '	address')</th>
 
 <th scope="col">@sortablelink('city', 'city')</th>
@@ -52,7 +50,7 @@
 
 <th scope="col">@sortablelink('country', 'country')</th>
 
-<th scope="col">@sortablelink('profile_status', 'profile_status')</th>
+<th scope="col">@sortablelink('profile_status', 'profile status')</th>
 
 <th scope="col">@sortablelink('status', 'status')</th>
 
@@ -74,10 +72,10 @@
 
 	<td>
 		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('edit',Auth::user()->rights)==true))
-		<a href="{{URL('edit_donors')}}/{{$value->id}}" class="status_btn" style="background: blue;min-width: 40px;"><span class="fa fa-edit"></span></a>
+		<a href="{{URL('edit_blood_banks')}}/{{$value->id}}" class="status_btn" style="background: blue;min-width: 40px;"><span class="fa fa-edit"></span></a>
 		@endif
 		@if((Auth::user()->type=='admin') || ($provider1::check_list_permission('delete',Auth::user()->rights)==true))
-		<a href="{{URL('delete_donors')}}/{{$value->id}}" id='{{$value->id}}' class="status_btn click-off" style="background:orange;min-width: 40px;"><span class="fa fa-trash"></span></a>
+		<a href="{{URL('delete_blood_banks')}}/{{$value->id}}" id='{{$value->id}}' class="status_btn click-off" style="background:orange;min-width: 40px;"><span class="fa fa-trash"></span></a>
 		@endif
 	</td>
 

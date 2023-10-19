@@ -73,6 +73,13 @@ Route::controller(App\Http\Controllers\Hospital_Controller::class)->group(functi
     Route::any('/edit_hospitals/{id}', 'edit_hospitals')->name('edit_hospitals');
     Route::get('/delete_hospitals/{id}', 'delete_hospitals')->name('delete_hospitals');
 });
+
+Route::controller(App\Http\Controllers\BloodBank_Controller::class)->group(function() {
+    Route::any('/list_blood_banks', 'list_blood_banks')->name('list_blood_banks');
+    Route::any('/add_blood_banks', 'add_blood_banks')->name('add_blood_banks');
+    Route::any('/edit_blood_banks/{id}', 'edit_blood_banks')->name('edit_blood_banks');
+    Route::get('/delete_blood_banks/{id}', 'delete_blood_banks')->name('delete_blood_banks');
+});
 /*Route::post('register1', [PassportAuthController::class, 'register']);
 Route::post('login1', [PassportAuthController::class, 'login']);*/
   

@@ -5,141 +5,145 @@ use Illuminate\Http\Request;
 use Validator;
 use Response;
 use Redirect;
-use App\Models\Web_User;
-use App\Models\{Country, State, City, User};
+use App\Models\{Country, State, City, User, Blood_Bank};
 use Illuminate\Support\Facades\DB; // this will import the DB facade into your controller class
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class Web_UserController extends Controller
+class BloodBank_Controller extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');   
     }
 
-    public function add_web_users(Request $request)
+    public function add_blood_banks(Request $request)
     {
          if ($request->isMethod('get'))
        {
             $data['countries'] = Country::get(["name", "id"]);
-            return view('admin.web_users.add', $data);   
+            return view('admin.blood_bank.add', $data);   
        }
        else{
             $request->validate([
             'name' => 'required|string|max:250',
-            'patient_name' => 'required|string|max:250',
-            'email' => 'required|email|max:250|unique:web_users',
+            'email' => 'required|email|max:250|unique:blood_banks',
             'password' => 'required',
-            'phone_no'=>'required|numeric|digits:10|unique:web_users',
-            'blood_type'=>'required|string|max:250',
+            'phone_no'=>'required|numeric|digits:10|unique:blood_banks',
             'address'=>'required|string|max:2500',
             'city'=>'required|int',
             'state'=>'required|int',
             'country'=>'required|int',
             'profile_status'=>'required',
+            'landline_no'=>'digits:11|unique:blood_banks',
+            'username'=>'required',
             'status'=>'required'
         ]);
         
-        Web_User::create([
+        blood_bank::create([
             'name' => $request->name,
-            'patient_name' => $request->patient_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'created_by_email'=>auth()->user()->email,
             'phone_no'=>$request->phone_no,
-            'blood_type'=>$request->blood_type,
             'address'=>$request->address,
             'city'=>$request->city,
             'state'=>$request->state,
             'country'=>$request->country,
             'profile_status'=>$request->profile_status,
+            'landline_no'=>$request->landline_no,
+            'username'=>$request->username,
             'status'=>$request->status
         ]);
 
         //$credentials = $request->only('email', 'password');
         //Auth::attempt($credentials);
         //$request->session()->regenerate();
-        return redirect()->route('list_web_users')
+        return redirect()->route('list_blood_banks')
         ->withSuccess('You have successfully registered & logged in!');
         }
     }
 
 
 
-    public function edit_web_users(Request $request, $id)
+    public function edit_blood_banks(Request $request, $id)
     {
-         $data1 = DB::table('web_users')->where('id', $id)->get();
+         $data1 = DB::table('blood_banks')->where('id', $id)->get();
          $email = $data1[0]->email;
          $phone_no = $data1[0]->phone_no;
+         $landline_no = $data1[0]->landline_no;
         if($email==$request->email)
            {
                 $email = 'required|string|max:250';
            }
            else{
-                $email = 'required|string|max:250|unique:web_users';
+                $email = 'required|string|max:250|unique:blood_banks';
            }
 
            if($phone_no==$request->phone_no)
            {
-                $phone_no = 'required|string|max:250';
+                $phone_no = 'digits:10';
            }
            else{
-                $phone_no = 'required|string|max:250|unique:web_users';
+                $phone_no = 'required|digits:10|unique:blood_banks';
+           }
+
+           if($landline_no==$request->landline_no)
+           {
+                $landline_no = 'digits:11';
+           }
+           else{
+                $landline_no = 'required|digits:11|unique:blood_banks';
            }
 
          if ($request->isMethod('get'))
        {
-            $data["web_users"] = DB::table('web_users')->where('id', $id)->get();
+            $data["blood_bank"] = DB::table('blood_banks')->where('id', $id)->get();
             $data['countries'] = Country::get(["name", "id"]);
-            return view('admin.web_users.edit', $data);   
+            return view('admin.blood_bank.edit', $data);   
        }
        else{
             $request->validate([
             'name' => 'required|string|max:250',
-            'patient_name' => 'required|string|max:250',
             'email' => $email,
-            //'password' => 'required',
             'phone_no'=>$phone_no,
-            'blood_type'=>'required|string|max:250',
             'address'=>'required|string|max:2500',
-            //'city'=>'required|int',
-            //'state'=>'required|int',
-            //'country'=>'required|int',
             'profile_status'=>'required',
+            'landline_no'=>$landline_no,
+            'username'=>'required',
             'status'=>'required'
         ]);
         
         $data = array(
             'name' => $request->name,
-            'patient_name' => $request->patient_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'created_by_email'=>auth()->user()->email,
             'phone_no'=>$request->phone_no,
-            'blood_type'=>$request->blood_type,
             'address'=>$request->address,
             'city'=>$request->city,
             'state'=>$request->state,
             'country'=>$request->country,
             'profile_status'=>$request->profile_status,
+            'landline_no'=>$request->landline_no,
+            'username'=>$request->username,
             'status'=>$request->status
         );
 
-        $up = Web_User::where('id', $id)
+        $up = blood_bank::where('id', $id)
         ->update($data);
         //$credentials = $request->only('email', 'password');
         //Auth::attempt($credentials);
         //$request->session()->regenerate();
-        return redirect()->route('list_web_users')
+        return redirect()->route('list_blood_banks')
         ->withSuccess('Record successfully Updated!');
         }
     }
 
-     public function delete_web_users(Request $request, $id)
+     public function delete_blood_banks(Request $request, $id)
     {
-        $del = DB::table('web_users')->where('id', $id)->delete();
+        $del = DB::table('blood_banks')->where('id', $id)->delete();
         if($del)
         {
             return redirect()->back()
@@ -162,19 +166,21 @@ class Web_UserController extends Controller
         return response()->json($data);
     }
 
-    public function list_web_users()
-    {    
-    $post = DB::table('web_users')->get();
+    public function list_blood_banks()
+    {
+
+    
+    $post = DB::table('blood_banks')->get();
      
     //var_dump($post);
      if(sizeof($post)<=0)
     {
-        return view('admin.web_users.list_web_users')->with("data",[]);
+        return view('admin.blood_bank.list_blood_banks')->with("data",[]);
     }
     else
     {
-        $web_users = Web_User::all();
-        return view('admin.web_users.list_web_users')->with("data",$web_users->toQuery()->paginate(25));
+        $blood_banks = blood_bank::all();
+        return view('admin.blood_bank.list_blood_banks')->with("data",$blood_banks->toQuery()->paginate(5));
     }
   }
 }
